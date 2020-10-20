@@ -11,6 +11,7 @@ import constants as CONSTANTS
 dummy_file_path = "../input/dummy.csv"
 
 class TestStringMethods(unittest.TestCase):
+    '''Test to check the basic line behavior'''
     def test_basic_line_processing(self):
         reader = TractPopulationChangeReader()
         proccessor = TractPopulationChangeProccessor()
@@ -18,7 +19,8 @@ class TestStringMethods(unittest.TestCase):
         lines = [l for l in csv.reader(fake_file_lines, quotechar='"', delimiter=',', quoting=csv.QUOTE_MINIMAL, skipinitialspace=True)]
         parsed_columns = reader.check_collumns(lines[0])
         proccessor.parse_text_to_datum(parsed_columns)
-
+        
+    '''Test to check the basic line behavior when there is an invalid column in data'''
     def test_line_processing_invalid_data_test(self):
         reader = TractPopulationChangeReader("../input/InvalidColumnValueData.csv")
         reader.open_and_validate_file()
@@ -26,7 +28,8 @@ class TestStringMethods(unittest.TestCase):
         with self.assertRaises(ArithmeticError):
             while True:
                 reader.readLine(proccessor.parse_text_to_datum)
-
+                
+    '''Test to check some of the numbers in quotes which are corner cases'''
     def test_Line_processing_with_quoted_values_test(self):
         reader = TractPopulationChangeReader()
         proccessor = TractPopulationChangeProccessor()

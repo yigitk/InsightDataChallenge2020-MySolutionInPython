@@ -15,13 +15,15 @@ class TestStringMethods(unittest.TestCase):
     def setUpClass(cls):
         if os.path.exists(test_output_file_path):
             os.remove(test_output_file_path)
-
+            
+    ''' File should be created even for no summary is available'''
     def test_empty_result_set_test(self):
         writer = PopulationChangeSummaryWriter(test_output_file_path)
         empty_summary_dictionary = {}
         writer.WriteToFile(empty_summary_dictionary)
         self.assertTrue(os.path.exists(test_output_file_path), "No file was created for simple result set!")
-
+        
+    ''' Basic test to see if the report.csv is created with the summary'''
     def test_simple_result_set_test(self):        
         writer = PopulationChangeSummaryWriter(test_output_file_path)
         summary_dictionary = {}
@@ -37,7 +39,8 @@ class TestStringMethods(unittest.TestCase):
         writer.WriteToFile(summary_dictionary)
 
         self.assertTrue(os.path.exists(test_output_file_path), "No file was created for simple result set!")
-
+        
+    ''' Test that creates an input here just to test the validity of columns'''
     def test_simple_result_set_write_and_read_test(self):
         writer = PopulationChangeSummaryWriter(test_output_file_path)
         summary_dictionary = {}
@@ -60,6 +63,7 @@ class TestStringMethods(unittest.TestCase):
             self.assertIsNotNone(output_columns, "Written file cannot be read")
             self.assertEqual(6, len(output_columns), "Written file has invalid column count")
             
+    '''Test that tests the example areas in dataset in insight/readme.md '''      
     def test_main_dataset_validated_test(self):
         area_code_filter = ["28540", "46900"]
         TractPopulationChangeSummarizer(area_code_filter).summarize_data_set()
