@@ -10,6 +10,7 @@ from Processing.TractPopulationChangeProccessor import TractPopulationChangeProc
 
 
 class TractPopulationChangeSummarizer():
+
     area_based_population_changes: Dict[str, AreaPopulationChangeSummary]
     area_code_filter: List[str]
     reader = TractPopulationChangeReader()
