@@ -7,21 +7,21 @@ from pathlib import Path
 from typing import Dict
 from decimal import Decimal, ROUND_HALF_UP
 
+"""A custom CSV file writer that is designed to write the output report"""
 class PopulationChangeSummaryWriter():
-    """A custom CSV file writer that is designed to write the output report"""
-
+    
     def __init__(
             self, 
             output_file_path=os.path.join(CONSTANTS.OUTPUT_FILE_PATH, CONSTANTS.OUTPUT_FILE_NAME)
         ) -> None:
         if(not output_file_path):
             raise ValueError("Output File Path must not be empty!")
-
+	"""Path of the output file"""
         self.output_file_path = output_file_path
-        """Path of the output file"""
-
+        
+	"""Directory of the output file"""
         self.output_dir = os.path.dirname(output_file_path)
-        """Directory of the output file"""
+        
 
     def make_path_if_not_exists(self):
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)

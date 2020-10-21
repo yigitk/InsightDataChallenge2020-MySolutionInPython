@@ -1,71 +1,71 @@
 import constants as CONSTANTS
 from Entities.PopulationChangeDatum import PopulationChangeDatum
 from typing import List
-
+"""Check if string is float"""
 def is_float(string: str):
-    """Check if string is float"""
-
+    
     try:
         float(string.replace(',',''))
         return True
     except:
         return False
-
+"""Check if string is int"""
 def is_int(string: str):
-    """Check if string is int"""
+    
     try:
         int(string.replace(',',''))
         return True
     except:
         return False
-
+ """Parse string to float"""
 def to_float(string: str):
-    """Parse string to float"""
+   
     try:
         return float(string.replace(',',''))
     except:
         return float(0)
-
+ """Parse string to int"""
 def to_int(string: str):
-    """Parse string to int"""
+   
     try:
         return int(string.replace(',',''))
     except:
         return 0
 
 class TractPopulationChangeProccessor():
-
+    """Normalize the string value removing double quotes"""
     def normalize_numeric_value(self, raw_value: str):
-        """Normalize the string value removing double quotes"""
+        
         if raw_value and raw_value.startswith('"') and raw_value.endswith('"'):
             return raw_value[1: len(raw_value) - 2]
         return raw_value
+		"""
+		Parse all the columns base on the table:
+		Variable    Variable Description
+		GEOID	    Concatenated State-County-Census Tract Code
+		ST10	    State FIPS Code
+		COU10	    County FIPS Code
+		TRACT10	    Census Tract Code
+		AREAL10	    Land area (square miles)
+		AREAW10	    Water area (square miles)
+		CSA09	    Combined Statistical Area Code
+		CBSA09	    Core Based Statistical Area (CBSA) Code
+		CBSA_T	    Core Based Statistical Area Title
+		MDIV09	    Metropolitan Division Code
+		CSI	    CBSA Status Indicator (1=Metropolitan statistical area, 2=Micropolitan statistical area, 3=Outside CBSA)
+		COFLG	    Central/Outlying County Flag (C=Central county, O=Outlying county)
+		POP00	    Total population (2000)
+		HU00	    Total housing units (2000)
+		POP10	    Total population (2010)
+		HU10	    Total housing units (2010)
+		NPCHG	    Numeric population change: 2000 to 2010
+		PPCHG	    Percent population change: 2000 to 2010
 
+		NHCHG	    Numeric change in housing units: 2000 to 2010
+		PHCHG	    Percent change in housing units: 2000 to 2010
+		"""
     def parse_text_to_datum(self, line_columns: List[str]) -> PopulationChangeDatum:
-        """
-        Parse all the columns base on the table:
-        Variable	Variable Description
-        GEOID	    Concatenated State-County-Census Tract Code
-        ST10	    State FIPS Code
-        COU10	    County FIPS Code
-        TRACT10	    Census Tract Code
-        AREAL10	    Land area (square miles)
-        AREAW10	    Water area (square miles)
-        CSA09	    Combined Statistical Area Code
-        CBSA09	    Core Based Statistical Area (CBSA) Code
-        CBSA_T	    Core Based Statistical Area Title
-        MDIV09	    Metropolitan Division Code
-        CSI	        CBSA Status Indicator (1=Metropolitan statistical area, 2=Micropolitan statistical area, 3=Outside CBSA)
-        COFLG	    Central/Outlying County Flag (C=Central county, O=Outlying county)
-        POP00	    Total population (2000)
-        HU00	    Total housing units (2000)
-        POP10	    Total population (2010)
-        HU10	    Total housing units (2010)
-        NPCHG	    Numeric population change: 2000 to 2010
-        PPCHG	    Percent population change: 2000 to 2010
-        NHCHG	    Numeric change in housing units: 2000 to 2010
-        PHCHG	    Percent change in housing units: 2000 to 2010
-        """
+       
         geo_id = line_columns[0]
         state_fips_code = line_columns[1]
         county_fips_code = line_columns[2]
