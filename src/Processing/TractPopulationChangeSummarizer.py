@@ -7,24 +7,25 @@ from IO.PopulationChangeSummaryWriter import PopulationChangeSummaryWriter
 from Processing.TractPopulationChangeProccessor import TractPopulationChangeProccessor
 
 """Class responsible for orchestrating the complete flow of summarization of the dataset"""
-class TractPopulationChangeSummarizer():
-    
 
+
+class TractPopulationChangeSummarizer():
     area_based_population_changes: Dict[str, AreaPopulationChangeSummary]
     area_code_filter: List[str]
     reader = TractPopulationChangeReader()
     processor = TractPopulationChangeProccessor()
-    
+
     """Filter of area codes"""
+
     def __init__(self, area_codes: List[str] = []) -> None:
         self.area_code_filter = area_codes
-        
+
     """
     Executes the flow of parsing the input file, summarizing the dataset for the required output
     and finally saving the result in the output file
-    """       
+    """
+
     def summarize_data_set(self):
-      
 
         self.area_based_population_changes = {}
         self.reader.open_and_validate_file()
@@ -34,16 +35,17 @@ class TractPopulationChangeSummarizer():
                 break
 
             if population_change.core_based_area_code and (
-                len(self.area_code_filter) == 0 or population_change.core_based_area_code in self.area_code_filter
+                    len(self.area_code_filter) == 0 or population_change.core_based_area_code in self.area_code_filter
             ):
                 self.process_datum(population_change)
         PopulationChangeSummaryWriter().WriteToFile(self.area_based_population_changes)
-        
-    """Processes a single record that was fetched from the input file and adds in to the overall summary"""
-    def process_datum(self, population_change: PopulationChangeDatum):
-       
 
-        summary = AreaPopulationChangeSummary(population_change.core_based_area_code, population_change.core_based_area_title)
+    """Processes a single record that was fetched from the input file and adds in to the overall summary"""
+
+    def process_datum(self, population_change: PopulationChangeDatum):
+
+        summary = AreaPopulationChangeSummary(population_change.core_based_area_code,
+                                              population_change.core_based_area_title)
 
         if population_change.core_based_area_code in self.area_based_population_changes:
             summary = self.area_based_population_changes[population_change.core_based_area_code]

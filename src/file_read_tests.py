@@ -10,32 +10,41 @@ import constants as CONSTANTS
 
 dummy_file_path = "../input/dummy.csv"
 
+
 class TestStringMethods(unittest.TestCase):
-    
-    ''' Test that ensures file exist checks are correctly implemented by providing an invalid path '''
+    """ Test that ensures file exist checks are correctly implemented by providing an invalid path """
+
     def test_file_does_not_exist(self):
         with self.assertRaises(FileNotFoundError):
             TractPopulationChangeReader(dummy_file_path)
 
-    '''Test that ensures file exist checks are correctly implemented'''
+    """Test that ensures file exist checks are correctly implemented"""
+
     def test_open_file(self):
         TractPopulationChangeReader()
-        
-    '''Test that ensures the input file header check works properly'''
+
+    """Test that ensures the input file header check works properly"""
+
     def test_open_invalid_file(self):
         with self.assertRaises(Exception):
             TractPopulationChangeReader("../input/censustract-00-10.xlsx").open_and_validate_file()
-            
-    '''Test that checks if a line can be seperated correctly into columns'''
-    def test_parse_line(self):        
-        test_line = ["01005950100,01,005,950100,187.3614167,11.21928403,,21640,\"Eufaula, AL - GA\",,2,C,3848,1735,3321,1627,-527,-13.70,-108,-6.22"]
-        lines = [l for l in csv.reader(test_line, quotechar='"', delimiter=',', quoting=csv.QUOTE_MINIMAL, skipinitialspace=True)]
 
-        expected_columns = ["01005950100", "01", "005", "950100", "187.3614167", "11.21928403", "", "21640", "Eufaula, AL - GA", "", "2", "C", "3848", "1735", "3321", "1627", "-527", "-13.70", "-108", "-6.22"]
+    """Test that checks if a line can be separated correctly into columns"""
+
+    def test_parse_line(self):
+        test_line = [
+            "01005950100,01,005,950100,187.3614167,11.21928403,,21640,\"Eufaula, AL - GA\",,2,C,3848,1735,3321,1627,-527,-13.70,-108,-6.22"]
+        lines = [l for l in
+                 csv.reader(test_line, quotechar='"', delimiter=',', quoting=csv.QUOTE_MINIMAL, skipinitialspace=True)]
+
+        expected_columns = ["01005950100", "01", "005", "950100", "187.3614167", "11.21928403", "", "21640",
+                            "Eufaula, AL - GA", "", "2", "C", "3848", "1735", "3321", "1627", "-527", "-13.70", "-108",
+                            "-6.22"]
         parsed_columns = TractPopulationChangeReader().check_collumns(lines[0])
         self.assertEqual(expected_columns, parsed_columns)
-        
-    '''Test that uses a file that has a row with a missing column and checks if the validation works correctly'''
+
+    """Test that uses a file that has a row with a missing column and checks if the validation works correctly"""
+
     def test_invalid_parse_line(self):
         with self.assertRaises(Exception):
             invalid_file_path = "../input/InvalidColumnsData.csv"
@@ -43,6 +52,7 @@ class TestStringMethods(unittest.TestCase):
             processor = TractPopulationChangeProccessor()
             reader.open_and_validate_file()
             reader.readLine(processor.parse_text_to_datum)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -8,26 +8,25 @@ from typing import Dict
 from decimal import Decimal, ROUND_HALF_UP
 
 """A custom CSV file writer that is designed to write the output report"""
+
+
 class PopulationChangeSummaryWriter():
-    
+
     def __init__(
-            self, 
+            self,
             output_file_path=os.path.join(CONSTANTS.OUTPUT_FILE_PATH, CONSTANTS.OUTPUT_FILE_NAME)
-        ) -> None:
-        if(not output_file_path):
+    ) -> None:
+        if (not output_file_path):
             raise ValueError("Output File Path must not be empty!")
-	"""Path of the output file"""
+        """Path of the output file"""
         self.output_file_path = output_file_path
-        
-	"""Directory of the output file"""
+
+        """Directory of the output file"""
         self.output_dir = os.path.dirname(output_file_path)
-        
 
     def make_path_if_not_exists(self):
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
 
-
-    
     def WriteToFile(self, areaBasedSummaries: Dict[str, AreaPopulationChangeSummary]):
         self.make_path_if_not_exists()
 
@@ -46,4 +45,3 @@ class PopulationChangeSummaryWriter():
                     format(round(decimal_value, 2)).rstrip('0').rstrip('0').rstrip('.')
                 ]
                 output_file.write(','.join(columns) + '\n')
-
