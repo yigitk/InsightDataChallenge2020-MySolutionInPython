@@ -10,7 +10,7 @@ After that just execute: ./run.sh
 
 For running the unit tests: cd src/ && ./run_tests.sh (Optional)
 
-#Problem definition
+# Problem definition
 
 We were given the 2000 to 2010 Census Tract Population Change data set in excel and csv form.
 
