@@ -28,7 +28,7 @@ Programming basics:
 
 Clean code - I tried to write my code as concise and modular as possible.
 
-Scalablity - Both reading and writing is done on a line by line basis and without allocating the memory for the full input or output file. (I tested this with a number of input lines up to 1.6 million lines)
+Scalablity - Both reading and writing is done on a line by line basis and without allocating the memory for the full input or output file. (I tested this with 600.000 lines)
 
 Next section has more about these practices.
 
