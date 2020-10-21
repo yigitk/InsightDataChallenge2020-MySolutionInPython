@@ -66,7 +66,7 @@ As long as we have a valid value for Core Based Statistical Area, this code shou
 
 I use the round method in Python (format(round(decimal_value, 2)).rstrip('0').rstrip('0').rstrip('.')) which is validated by hand using a scientific round website.
 
-#Bonus 
+# Bonus 
 
 I wrote this exact code snippet and tests in C#. Just for fun you can check that out too ! Here is the link (that repo will be public after the deadline) :
 https://github.com/yigitk/InsightCodingChallange2020-DotnetCoreCsharp
